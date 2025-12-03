@@ -84,4 +84,10 @@ public class ProductServiceImpl implements ProductService {
             throw new ResourceNotFoundException("Product not found: " + id);
         productRepository.deleteById(id);
     }
+
+    @Override
+    public Product getProductEntity(Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found: " + productId));
+    }
 }
