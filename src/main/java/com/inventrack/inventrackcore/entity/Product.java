@@ -27,4 +27,8 @@ public class Product {
     Double price;
 
     String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
 }

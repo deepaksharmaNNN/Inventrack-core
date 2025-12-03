@@ -15,4 +15,6 @@ public class ProductDto {
     Integer quantity;
     Double price;
     String description;
+    Long supplierId;
+    String supplierName;
 }

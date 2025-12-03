@@ -69,4 +69,11 @@ public class SupplierServiceImpl implements SupplierService {
         }
         supplierRepository.deleteById(id);
     }
+
+    @Override
+    public Supplier getSupplierEntityById(Long id) {
+        return supplierRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found: " + id));
+    }
+
 }
