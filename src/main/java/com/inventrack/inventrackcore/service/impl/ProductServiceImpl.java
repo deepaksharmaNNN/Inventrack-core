@@ -1,11 +1,13 @@
 package com.inventrack.inventrackcore.service.impl;
 
 import com.inventrack.inventrackcore.dto.ProductDto;
+import com.inventrack.inventrackcore.entity.Category;
 import com.inventrack.inventrackcore.entity.Product;
 import com.inventrack.inventrackcore.entity.Supplier;
 import com.inventrack.inventrackcore.exception.ResourceNotFoundException;
 import com.inventrack.inventrackcore.mapper.ProductMapper;
 import com.inventrack.inventrackcore.repository.ProductRepository;
+import com.inventrack.inventrackcore.service.CategoryService;
 import com.inventrack.inventrackcore.service.ProductService;
 import com.inventrack.inventrackcore.service.SupplierService;
 import jakarta.transaction.Transactional;
@@ -23,6 +25,8 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper mapper;
     private final SupplierService supplierService;
+    private final CategoryService categoryService;
+
 
     @Override
     public ProductDto createProduct(ProductDto dto) {
@@ -32,6 +36,11 @@ public class ProductServiceImpl implements ProductService {
             Supplier supplier = supplierService.getSupplierEntityById(dto.getSupplierId());
             product.setSupplier(supplier);
         }
+        if (dto.getCategoryId() != null) {
+            Category category = categoryService.getCategoryEntity(dto.getCategoryId());
+            product.setCategory(category);
+        }
+
 
         return mapper.toDto(productRepository.save(product));
     }
@@ -42,10 +51,16 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found: " + id));
 
         existing.setName(dto.getName());
-        existing.setCategory(dto.getCategory());
+        existing.setCategory(categoryService.getCategoryEntity(dto.getCategoryId()));
         existing.setQuantity(dto.getQuantity());
         existing.setPrice(dto.getPrice());
         existing.setDescription(dto.getDescription());
+
+        if (dto.getCategoryId() != null) {
+            Category category = categoryService.getCategoryEntity(dto.getCategoryId());
+            existing.setCategory(category);
+        }
+
 
         if (dto.getSupplierId() != null) {
             Supplier supplier = supplierService.getSupplierEntityById(dto.getSupplierId());

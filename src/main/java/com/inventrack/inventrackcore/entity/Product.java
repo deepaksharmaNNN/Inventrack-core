@@ -20,8 +20,6 @@ public class Product {
 
     String name;
 
-    String category;
-
     Integer quantity;
 
     Double price;
@@ -31,4 +29,9 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
 }

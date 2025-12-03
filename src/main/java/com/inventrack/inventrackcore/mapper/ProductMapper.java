@@ -14,12 +14,14 @@ public class ProductMapper {
         return ProductDto.builder()
                 .id(product.getId())
                 .name(product.getName())
-                .category(product.getCategory())
+                .category(String.valueOf(product.getCategory()))
                 .quantity(product.getQuantity())
                 .price(product.getPrice())
                 .description(product.getDescription())
                 .supplierId(product.getSupplier() != null ? product.getSupplier().getId() : null)
                 .supplierName(product.getSupplier() != null ? product.getSupplier().getName() : null)
+                .categoryId(product.getCategory() != null ? product.getCategory().getId() : null)
+                .categoryName(product.getCategory() != null ? product.getCategory().getName() : null)
                 .build();
     }
 
@@ -30,7 +32,7 @@ public class ProductMapper {
         return Product.builder()
                 .id(productDto.getId())
                 .name(productDto.getName())
-                .category(productDto.getCategory())
+                .category(null) // Category mapping should be handled separately
                 .quantity(productDto.getQuantity())
                 .price(productDto.getPrice())
                 .description(productDto.getDescription())

@@ -17,4 +17,7 @@ public class ProductDto {
     String description;
     Long supplierId;
     String supplierName;
+    Long categoryId;
+    String categoryName;
+
 }
