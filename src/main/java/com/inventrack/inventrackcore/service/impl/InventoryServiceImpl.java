@@ -108,4 +108,16 @@ public class InventoryServiceImpl implements InventoryService {
         inv.setCurrentStock(inv.getCurrentStock() - qty);
         inventoryRepository.save(inv);
     }
+    @Override
+    public Inventory getInventoryEntityByProduct(Long productId) {
+        Product product = productService.getProductEntity(productId);
+        return inventoryRepository.findByProduct(product)
+                .orElseThrow(() -> new ResourceNotFoundException("Inventory not found for product: " + productId));
+    }
+
+    @Override
+    public Inventory saveInventoryEntity(Inventory inv) {
+        return inventoryRepository.save(inv);
+    }
+
 }
